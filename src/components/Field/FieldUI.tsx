@@ -1,7 +1,7 @@
 import styles from "./field.module.css";
 export default function FieldUI({ fieldSize }: { fieldSize: number }) {
     return (
-        <>
+        <div className={styles.fieldContainer}>
             <h1 className={styles.fieldTitle}> Player 1</h1>
             <div className={styles.field}>
                 {Array.from({ length: fieldSize }).map((_, rowIndex) => (
@@ -12,6 +12,6 @@ export default function FieldUI({ fieldSize }: { fieldSize: number }) {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 }
