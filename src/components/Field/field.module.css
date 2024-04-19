@@ -1,9 +1,34 @@
 .fieldContainer {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100px;
-    width: 100px;
-    background-color: red;
+    align-items: center;
+    background-color: rgb(250, 250, 250);
+    border: 3px solid blue;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0px;
+    height: 200px;
+    width: 200px;
+    background-color: rgb(250, 250, 250);
+    border: 3px solid red;
+}
+
+.row {
+    display: grid;
+    
+    gap: 0px;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+    background-color: lightgray;
+}
+
+.fieldTitle {
+    margin: 0;
 }
