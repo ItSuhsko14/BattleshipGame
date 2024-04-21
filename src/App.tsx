@@ -1,12 +1,16 @@
 import './App.css'
-import Field from './components/Field/Field'
+// import Field from './components/Field/Field'
+// import NavBar from './components/NavBar/NavBar'
+
 
 function App() {
 
   return (
-    <>
-      <Field />
-    </>
+    <div> </div>
+    // <div className='appContainer'>
+    //   <NavBar />
+    //   <Field />
+    // </div>
   )
 }
 

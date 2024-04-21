@@ -1,17 +1,25 @@
 import styles from "./field.module.css";
-export default function FieldUI({ fieldSize }: { fieldSize: number }) {
+
+interface FieldUIProps {
+    fieldSize: number;
+}
+
+const FieldUI: React.FC<FieldUIProps> = ( { fieldSize } ) => {
+    const rows: JSX.Element[] = [];
+    for (let i=0; i<fieldSize; i++) {
+        const cell = [];
+        for (let j=0; j<fieldSize; j++) {
+            cell.push(
+                <div key={j} className={styles.cell}></div>
+            )            
+        }
+        rows.push(<div key={i} className={styles.row}>{cell}</div>)
+    }
+    console.log(rows);
+      
     return (
-        <div className={styles.fieldContainer}>
-            <h1 className={styles.fieldTitle}> Player 1</h1>
-            <div className={styles.field}>
-                {Array.from({ length: fieldSize }).map((_, rowIndex) => (
-                    <div key={rowIndex} className={styles.row}>
-                        {Array.from({ length: fieldSize }).map((_, colIndex) => (
-                            <div key={colIndex} className={styles.cell}></div>
-                        ))}
-                    </div>
-                ))}
-            </div>
-        </div>
+        <div className={styles.fieldContainer}>{rows}</div>
     );
 }
+
+export default FieldUI;

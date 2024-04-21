@@ -1,0 +1,22 @@
+.title {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+
+@media screen and (orientation: portrait) {
+    .container {
+      flex-direction: column;
+    }
+}
+    
+@media screen and (orientation: landscape) {
+    .container {
+      flex-direction: row;
+    }
+}
