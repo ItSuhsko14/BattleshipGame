@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface AppContextProps {
   mode: 'null' | 'setting' | 'play';
-  setMode: (mode: 'setting' | 'play') => void;
+  setMode: (mode: 'null' | 'setting' | 'play') => void;
 }
 
 const AppContext = createContext<AppContextProps>({
@@ -13,7 +13,7 @@ const AppContext = createContext<AppContextProps>({
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-  const [mode, setMode] = useState<'setting' | 'play'>('setting');
+  const [mode, setMode] = useState<'null' | 'setting' | 'play'>('setting');
 
   const value: AppContextProps = {
     mode,

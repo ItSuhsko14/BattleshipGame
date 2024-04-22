@@ -11,7 +11,7 @@ const Field: React.FC<FieldProps> = () => {
 
     return (
         <div className={styles.container}>
-            {mode === 'setting' || mode === 'play' && (
+            {(mode === 'setting' || mode === 'play') && (
                 <div>
                     <h2 className={styles.fieldTitle}>Player 1</h2>
                     <FieldUI fieldSize={10} />
