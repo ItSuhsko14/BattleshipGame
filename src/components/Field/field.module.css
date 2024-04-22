@@ -74,3 +74,19 @@
 .hidden {
     display: none;
 }
+
+.occupied {
+  background-color: grey;
+}
+
+.missed {
+  background-color: yellow;
+}
+
+.hit {
+  background-color: red;
+}
+
+.empty {
+  background-color: white;
+}

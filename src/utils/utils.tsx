@@ -1,78 +1,82 @@
-type CellState = 'empty' | 'ship' | 'hit' | 'miss';
-
-interface Cell {
-  state: CellState;
+export interface Cell {
+  i: number;
+  j: number;
+  mode: 'empty' | 'occupied' | 'missed' | 'hit';
 }
 
-export interface Ship {
-  length: number;
-  position: [number, number]; // Координати початку корабля
-  orientation: 'horizontal' | 'vertical';
+
+export type Ship = Cell[];
+
+export type Field = Ship[];
+
+export interface AppState {
+  mode: 'null' | 'setting' | 'play';
+  userField: Field;
+  computerField: Field;
 }
+function generateShips(shipCounts: [number, number][]): Field {
+  const fieldSize = 10; // Розмір поля
+  const field: Field = [];
 
-export type Board = Cell[][];
+  // Ініціалізація порожнього поля
+  for (let i = 0; i < fieldSize; i++) {
+    const row: Ship = [];
+    for (let j = 0; j < fieldSize; j++) {
+      row.push({ i, j, mode: 'empty' });
+    }
+    field.push(row);
+  }
 
-interface UserData {
-    board: Board; // Дані поля користувача
-    ships: Ship[]; // Дані про кораблі
-}
 
-export interface GameData {
-    boardSize: number;
-    userData: UserData; // Додайте дані поля користувача до об'єкту даних гри
-}
-
-export function generateEmptyBoard(boardSize: number): Board {
-    const board: Board = [];
-    for (let i = 0; i < boardSize; i++) {
-      const row: Cell[] = [];
-      for (let j = 0; j < boardSize; j++) {
-        row.push({ state: 'empty' });
+  // Генерація розташування кораблів
+  for (const [deck, count] of shipCounts) {
+    for (let k = 0; k < count; k++) {
+      const orientation = Math.random() < 0.5 ? 'horizontal' : 'vertical';
+      let placed = false;
+      while (!placed) {
+        const row = Math.floor(Math.random() * fieldSize);
+        const col = Math.floor(Math.random() * fieldSize);
+        if (canPlaceShip(field, row, col, deck, orientation)) {
+          placeShip(field, row, col, deck, orientation);
+          placed = true;
+        }
       }
-      board.push(row);
-    }
-    return board;
-  }
-  
-  function getRandomOrientation(): 'horizontal' | 'vertical' {
-    return Math.random() < 0.5 ? 'horizontal' : 'vertical';
-  }
-  
-  function placeShip(board: Board, ship: Ship): void {
-    const [row, col] = ship.position;
-    const { length, orientation } = ship;
-  
-    for (let i = 0; i < length; i++) {
-      const newRow = orientation === 'vertical' ? row + i : row;
-      const newCol = orientation === 'horizontal' ? col + i : col;
-      board[newRow][newCol].state = 'ship';
     }
   }
-  
-  export function generateShips(boardSize: number, shipLengths: number[]): Ship[] {
-    const ships: Ship[] = [];
-    for (const length of shipLengths) {
-      const orientation = getRandomOrientation();
-      const position: [number, number] = [
-        Math.floor(Math.random() * boardSize),
-        Math.floor(Math.random() * boardSize),
-      ];
-      ships.push({ length, position, orientation });
-    }
-    return ships;
-  }
-  
-  export function generateGameData(boardSize: number, shipLengths: number[]): GameData {
-    const userData: UserData = {
-        board: generateEmptyBoard(boardSize), // Генеруємо порожнє поле користувача
-        ships: generateShips(boardSize, shipLengths), // Генеруємо кораблі
-    };
 
-    return {
-        boardSize,
-        userData,
-    };
+  return field;
 }
-  
 
-  
+function canPlaceShip(field: Field, row: number, col: number, deck: number, orientation: 'horizontal' | 'vertical'): boolean {
+  const fieldSize = field.length;
+  if (orientation === 'horizontal' && col + deck > fieldSize) return false;
+  if (orientation === 'vertical' && row + deck > fieldSize) return false;
+
+  for (let i = 0; i < deck; i++) {
+    const newRow = orientation === 'vertical' ? row + i : row;
+    const newCol = orientation === 'horizontal' ? col + i : col;
+
+    if (field[newRow][newCol].mode !== 'empty') return false;
+
+    // Перевірка на відстань між кораблями
+    for (let r = newRow - 1; r <= newRow + 1; r++) {
+      for (let c = newCol - 1; c <= newCol + 1; c++) {
+        if (r >= 0 && r < fieldSize && c >= 0 && c < fieldSize && field[r][c].mode !== 'empty') {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
+function placeShip(field: Field, row: number, col: number, deck: number, orientation: 'horizontal' | 'vertical'): void {
+  for (let i = 0; i < deck; i++) {
+    const newRow = orientation === 'vertical' ? row + i : row;
+    const newCol = orientation === 'horizontal' ? col + i : col;
+    field[newRow][newCol].mode = 'occupied';
+  }
+}
+
+export default generateShips;

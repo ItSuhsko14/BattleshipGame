@@ -1,23 +1,29 @@
 import { Button } from "../UI/MyButton"
 import { useAppContext } from "../../AppState/AppContext"
 import styles from './navBar.module.css'
-import { generateGameData} from "../../utils/utils"
-import { GameData } from './../../AppState/AppContext';
+import generateShips from './../../utils/utils'
 
 interface NavBarProps {
 
 }
 const NavBar: React.FC<NavBarProps> = () => {
-    const { mode, setMode, setUserField } = useAppContext()
-    
-    const handleCreateShipsClick = () => {
-        const boardSize = 10; // Розмір поля
-        const shipLengths = [5, 4, 3, 3, 2]; // Довжина кораблів
+    const { mode, setMode, setUserField } = useAppContext();
 
-    
-        const gameData: GameData = generateGameData(boardSize, shipLengths);
-        setUserField(gameData)
-        setMode('play'); // Змінюємо режим гри на "play"
+    console.log(mode);
+
+
+    const handleCreateShipsClick = () => {
+        const shipConfigurations: [number, number][] = [
+            [4, 1], // 1 корабель з 4 палубами
+            [3, 2], // 2 кораблі з 3 палубами
+            [2, 3], // 3 кораблі з 2 палубами
+            [1, 4], // 4 кораблі з 1 палубою
+        ];
+        const shipPlacement = generateShips(shipConfigurations);
+        console.log(shipPlacement);
+
+        setUserField(shipPlacement)
+
     };
     const handleButtonClick = () => {
         if (mode === 'null') {

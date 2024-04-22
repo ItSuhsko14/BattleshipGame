@@ -1,48 +1,58 @@
 import React, { createContext, useContext, useState, Dispatch, SetStateAction } from 'react';
-import { Board, Ship } from "../utils/utils";
 
-interface AppContextProps {
+interface Cell {
+    i: number; 
+    j: number;
+    mode: 'empty' | 'occupied' | 'missed' | 'hit'; 
+}
+
+export type Field = Cell[][];
+
+const AppContext = createContext<{
     mode: 'null' | 'setting' | 'play';
-    userField: UserData;
-    computerField: string[][];
-    setMode: (mode: 'null' | 'setting' | 'play') => void;
-    setComputerField: Dispatch<SetStateAction<string[][]>>;
-    setUserField: Dispatch<SetStateAction<UserData>>;
-}
-
-interface UserData {
-    board: Board; // Дані поля користувача
-    ships: Ship[]; // Дані про кораблі
-}
-export interface GameData {
-  boardSize: number;
-  userData: UserData; // Додайте дані поля користувача до об'єкту даних гри
-}
-
-const AppContext = createContext<AppContextProps>({
-    mode: 'setting',
-    userField: { board: [], ships: [] },
+    userField: Field; 
+    computerField: Field; 
+    setMode: Dispatch<SetStateAction<'null' | 'setting' | 'play'>>;
+    setUserField: Dispatch<SetStateAction<Field>>;
+    setComputerField: Dispatch<SetStateAction<Field>>;
+}>({
+    mode: 'null',
+    userField: [],
     computerField: [],
     setMode: () => {},
-    setComputerField: () => {},
     setUserField: () => {},
+    setComputerField: () => {},
 });
 
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-    const [mode, setMode] = useState<'null' | 'setting' | 'play'>('setting');
-    const [userField, setUserField] = useState<UserData>({ board: [], ships: [] });
-    const [computerField, setComputerField] = useState<string[][]>([]);
+    const [mode, setMode] = useState<'null' | 'setting' | 'play'>('null');
+    const [userField, setUserField] = useState<Field>(initializeEmptyField());
+    const [computerField, setComputerField] = useState<Field>(initializeEmptyField());
 
-    const value: AppContextProps = {
-        mode,
-        userField,
-        computerField,
-        setMode,
-        setComputerField,
-        setUserField,
-    };
+    function initializeEmptyField(): Field {
+        const field: Field = [];
+        for (let i = 0; i < 10; i++) {
+            const row: Cell[] = [];
+            for (let j = 0; j < 10; j++) {
+                row.push({ i, j, mode: 'empty' });
+            }
+            field.push(row);
+        }
+        return field;
+    }
 
-    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-};
+    return (
+    <AppContext.Provider value={{
+            mode,
+            userField,
+            computerField,
+            setMode,
+            setUserField,
+            setComputerField,
+        }}>
+            {children}
+        </AppContext.Provider>
+    );
+}
