@@ -45,12 +45,12 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
         return field;
     }
 
-    const updateFieldState = (i: number, j: number, newMode: Cell['mode'], field: Field): Field => {
-        const updatedField: Field = [...field]; 
-        updatedField[i] = [...field[i]]; 
-        updatedField[i][j] = { ...field[i][j], mode: newMode };
-        return updatedField;
-    };
+    // const updateFieldState = (i: number, j: number, newMode: Cell['mode'], field: Field): Field => {
+    //     const updatedField: Field = [...field]; 
+    //     updatedField[i] = [...field[i]]; 
+    //     updatedField[i][j] = { ...field[i][j], mode: newMode };
+    //     return updatedField;
+    // };
 
     const updateCellMode = (i: number, j: number, currentMode: string, field: Field) => {
         switch (currentMode) {
