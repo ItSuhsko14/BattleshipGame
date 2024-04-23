@@ -4,30 +4,26 @@ import { Field } from '../../AppState/AppContext';
 
 interface FieldUIProps {
     field: Field;
-    onCellClick: (i: number, j: number) => void;
-}
+    onCellClick: (event: React.MouseEvent<HTMLDivElement>) => void;}
 
 const FieldUI: React.FC<FieldUIProps> = ({ field, onCellClick }) => {
-    // Перевірка, чи є поле не пустим
     if (!field || field.length === 0) {
-        return null; // Повертаємо null, якщо поле порожнє
+        return null; 
     }
 
     const handleCellClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const i = parseInt(event.currentTarget.dataset.i!);
-        const j = parseInt(event.currentTarget.dataset.j!);
-        onCellClick(i, j);
+        onCellClick(event);
     };
 
-    // Відображення ігрового поля на основі даних зі стану контексту
     return (
         <div className={styles.fieldContainer}>
             {field.map((row, i) => (
                 <div key={i} className={styles.row}>
                     {row.map((cell, j) => (
                         <div key={`${i}-${j}`}
-                            className={`${styles.cell} 
-                            ${getCellStyle(cell.mode)}`}
+                            className={`${styles.cell} ${getCellStyle(cell.mode)}`}
+                            data-i={i}
+                            data-j={j} 
                             onClick={(e) => handleCellClick(e)}
                         >
                         </div>

@@ -4,7 +4,6 @@ export interface Cell {
   mode: 'empty' | 'occupied' | 'missed' | 'hit';
 }
 
-
 export type Ship = Cell[];
 
 export type Field = Ship[];

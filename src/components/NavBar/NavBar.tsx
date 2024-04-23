@@ -2,33 +2,28 @@ import { Button } from "../UI/MyButton"
 import { useAppContext } from "../../AppState/AppContext"
 import styles from './navBar.module.css'
 import generateShips from './../../utils/utils'
+import { shipConfigurations } from "../../utils/shipConfiguration"
 
 interface NavBarProps {
 
 }
 const NavBar: React.FC<NavBarProps> = () => {
-    const { mode, setMode, setUserField } = useAppContext();
+    const { mode, setMode, setUserField, setComputerField } = useAppContext();
 
     console.log(mode);
 
 
     const handleCreateShipsClick = () => {
-        const shipConfigurations: [number, number][] = [
-            [4, 1], // 1 корабель з 4 палубами
-            [3, 2], // 2 кораблі з 3 палубами
-            [2, 3], // 3 кораблі з 2 палубами
-            [1, 4], // 4 кораблі з 1 палубою
-        ];
+        
         const shipPlacement = generateShips(shipConfigurations);
-        console.log(shipPlacement);
-
         setUserField(shipPlacement)
-
     };
     const handleButtonClick = () => {
         if (mode === 'null') {
             setMode('setting')
         } else if (mode === 'setting') {
+            const shipPlacement = generateShips(shipConfigurations);
+            setComputerField(shipPlacement);
             setMode('play')
         } else {
             setMode('null')

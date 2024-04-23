@@ -15,6 +15,7 @@ const AppContext = createContext<{
     setMode: Dispatch<SetStateAction<'null' | 'setting' | 'play'>>;
     setUserField: Dispatch<SetStateAction<Field>>;
     setComputerField: Dispatch<SetStateAction<Field>>;
+    updateCellMode: (i: number, j: number, currentMode: string, field: Field) => void
 }>({
     mode: 'null',
     userField: [],
@@ -22,6 +23,7 @@ const AppContext = createContext<{
     setMode: () => {},
     setUserField: () => {},
     setComputerField: () => {},
+    updateCellMode: () => {},
 });
 
 export const useAppContext = () => useContext(AppContext);
@@ -44,10 +46,29 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
     }
 
     const updateFieldState = (i: number, j: number, newMode: Cell['mode'], field: Field): Field => {
-        const updatedField: Field = [...field]; // Копіюємо посилання на зовнішній масив
-        updatedField[i] = [...field[i]]; // Копіюємо рядок, щоб зробити його мутабельним
-        updatedField[i][j] = { ...field[i][j], mode: newMode }; // Змінюємо стан ячейки за заданими координатами
+        const updatedField: Field = [...field]; 
+        updatedField[i] = [...field[i]]; 
+        updatedField[i][j] = { ...field[i][j], mode: newMode };
         return updatedField;
+    };
+
+    const updateCellMode = (i: number, j: number, currentMode: string, field: Field) => {
+        switch (currentMode) {
+            case 'empty':
+                field[i][j].mode = 'missed';
+                break;
+            case 'occupied':
+                field[i][j].mode = 'hit';
+                break;
+            default:
+                break;
+        }
+        
+        if (field === userField) {
+            setUserField([...field]);
+        } else if (field === computerField) {
+            setComputerField([...field]);
+        }
     };
 
     return (
@@ -58,6 +79,7 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
             setMode,
             setUserField,
             setComputerField,
+            updateCellMode,
         }}>
             {children}
         </AppContext.Provider>
