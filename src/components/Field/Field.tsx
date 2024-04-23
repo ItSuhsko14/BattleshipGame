@@ -20,7 +20,7 @@ const Field: React.FC<FieldProps> = () => {
         setCurrentPlayer    
     } = useAppContext();
 
-    const handleCellClick = (event: React.MouseEvent<HTMLDivElement>, fieldToUpdate: FieldType) => {
+    const handleCellClick = (event: React.MouseEvent<HTMLDivElement>) => {
         
     };
 
@@ -49,7 +49,7 @@ const Field: React.FC<FieldProps> = () => {
     };
     
     const handleComputerFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
-            handleCellClick(event, computerField);
+            handleCellClick(event);
             const target = event.target as HTMLDivElement;
             const cellIndex = parseInt(target.dataset.i!);
             const rowIndex = parseInt(target.dataset.j!);
