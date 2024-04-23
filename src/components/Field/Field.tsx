@@ -1,9 +1,8 @@
-import {useState} from 'react';
+
 import styles from './field.module.css'
 import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
 import Setting from './Setting';
-import { Field as FieldType } from '../../AppState/AppContext';
 import { computerShoot, checkOccupiedCells } from '../../utils/actionFunctions';
 
 interface FieldProps {
@@ -20,8 +19,8 @@ const Field: React.FC<FieldProps> = () => {
         setCurrentPlayer    
     } = useAppContext();
 
-    const handleCellClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        
+    const handleCellClick = () => {
+        console.log('handleCellClick');
     };
 
     const computerAttack = (i: number, j: number) => {
@@ -49,7 +48,7 @@ const Field: React.FC<FieldProps> = () => {
     };
     
     const handleComputerFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
-            handleCellClick(event);
+            handleCellClick();
             const target = event.target as HTMLDivElement;
             const cellIndex = parseInt(target.dataset.i!);
             const rowIndex = parseInt(target.dataset.j!);
