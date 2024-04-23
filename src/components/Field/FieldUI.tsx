@@ -3,14 +3,21 @@ import styles from "./field.module.css";
 import { Field } from '../../AppState/AppContext';
 
 interface FieldUIProps {
-   field: Field;
+    field: Field;
+    onCellClick: (i: number, j: number) => void;
 }
 
-const FieldUI: React.FC<FieldUIProps> = ({ field }) => {
+const FieldUI: React.FC<FieldUIProps> = ({ field, onCellClick }) => {
     // Перевірка, чи є поле не пустим
     if (!field || field.length === 0) {
         return null; // Повертаємо null, якщо поле порожнє
     }
+
+    const handleCellClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const i = parseInt(event.currentTarget.dataset.i!);
+        const j = parseInt(event.currentTarget.dataset.j!);
+        onCellClick(i, j);
+    };
 
     // Відображення ігрового поля на основі даних зі стану контексту
     return (
@@ -18,7 +25,12 @@ const FieldUI: React.FC<FieldUIProps> = ({ field }) => {
             {field.map((row, i) => (
                 <div key={i} className={styles.row}>
                     {row.map((cell, j) => (
-                        <div key={`${i}-${j}`} className={`${styles.cell} ${getCellStyle(cell.mode)}`}></div>
+                        <div key={`${i}-${j}`}
+                            className={`${styles.cell} 
+                            ${getCellStyle(cell.mode)}`}
+                            onClick={(e) => handleCellClick(e)}
+                        >
+                        </div>
                     ))}
                 </div>
             ))}

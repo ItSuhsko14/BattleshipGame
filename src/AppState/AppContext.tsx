@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, Dispatch, SetStateAction } 
 interface Cell {
     i: number; 
     j: number;
-    mode: 'empty' | 'occupied' | 'missed' | 'hit'; 
+    mode: 'empty' | 'occupied' | 'missed' | 'hit';
 }
 
 export type Field = Cell[][];
@@ -42,6 +42,13 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
         }
         return field;
     }
+
+    const updateFieldState = (i: number, j: number, newMode: Cell['mode'], field: Field): Field => {
+        const updatedField: Field = [...field]; // Копіюємо посилання на зовнішній масив
+        updatedField[i] = [...field[i]]; // Копіюємо рядок, щоб зробити його мутабельним
+        updatedField[i][j] = { ...field[i][j], mode: newMode }; // Змінюємо стан ячейки за заданими координатами
+        return updatedField;
+    };
 
     return (
     <AppContext.Provider value={{
