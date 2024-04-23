@@ -4,6 +4,7 @@ import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
 import Setting from './Setting';
 import { Field as FieldType } from '../../AppState/AppContext';
+import { computerShoot, checkOccupiedCells } from '../../utils/actionFunctions';
 
 interface FieldProps {
 
@@ -12,6 +13,7 @@ const Field: React.FC<FieldProps> = () => {
     const { 
         mode, 
         userField, 
+        setWinner,
         computerField, 
         updateCellMode,
         currentPlayer,
@@ -19,27 +21,53 @@ const Field: React.FC<FieldProps> = () => {
     } = useAppContext();
 
     const handleCellClick = (event: React.MouseEvent<HTMLDivElement>, fieldToUpdate: FieldType) => {
-        const target = event.target as HTMLDivElement;
-        const cellIndex = parseInt(target.dataset.i!);
-        const rowIndex = parseInt(target.dataset.j!);
-        const cellMode = fieldToUpdate[cellIndex][rowIndex].mode;
-        updateCellMode(cellIndex, rowIndex, cellMode, fieldToUpdate);
-        cellMode == 'empty' ? setCurrentPlayer(currentPlayer === 'user' ? 'computer' : 'user') : null;  
+        
     };
 
-    const handleUserFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (currentPlayer === 'computer') {
-            handleCellClick(event, userField);    
+    const computerAttack = (i: number, j: number) => {
+        setCurrentPlayer('computer')
+        setTimeout(() => {
+            
+        }, 2000 )
+        const cellIndex = i;
+        const rowIndex = j;
+        const cellMode = userField[cellIndex][rowIndex].mode;
+        updateCellMode(cellIndex, rowIndex, cellMode, userField);
+        if (userField[cellIndex][rowIndex].mode == 'empty') {
+            console.log(userField[cellIndex][rowIndex].mode);
+            const {i, j} = computerShoot(userField);
+            checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
+            computerAttack(i, j);
+        } else {
+            console.log(currentPlayer);
+            setCurrentPlayer('user')
         }
+        
+        
+        
         
     };
     
-    // При кліку на поле computerField
     const handleComputerFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        if (currentPlayer === 'user') {
             handleCellClick(event, computerField);
-        }
+            const target = event.target as HTMLDivElement;
+            const cellIndex = parseInt(target.dataset.i!);
+            const rowIndex = parseInt(target.dataset.j!);
+            const cellMode = computerField[cellIndex][rowIndex].mode;
+            updateCellMode(cellIndex, rowIndex, cellMode, computerField);
+            checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
+            if (cellMode == 'empty') {
+                setCurrentPlayer('computer')
+                console.log(currentPlayer);
+                const {i, j} = computerShoot(userField);
+                computerAttack(i, j);
+            }
     };
+
+    const onUserClick = () => {
+        console.log('User click');
+        
+    }
 
     return (
         <div className={styles.container}>
@@ -48,7 +76,7 @@ const Field: React.FC<FieldProps> = () => {
                     <h2 className={styles.fieldTitle}>Player 1</h2>
                     <FieldUI
                         field={userField}
-                        onCellClick={handleUserFieldClick}
+                        onCellClick={onUserClick}
                         isHidden={false}
                     />
                 </div>

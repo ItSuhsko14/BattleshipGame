@@ -15,9 +15,6 @@ const NavBar: React.FC<NavBarProps> = () => {
         currentPlayer
     } = useAppContext();
 
-    console.log(mode);
-
-
     const handleCreateShipsClick = () => {
 
         const shipPlacement = generateShips(shipConfigurations);

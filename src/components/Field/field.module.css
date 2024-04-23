@@ -38,8 +38,8 @@
 
 @media screen and (orientation: landscape) {
   .fieldContainer {
-    height: 25vw;
-    width: 25vw;
+    height: 30vw;
+    width: 30vw;
   }
 }
 

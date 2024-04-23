@@ -12,6 +12,8 @@ const AppContext = createContext<{
     mode: 'null' | 'setting' | 'play';
     currentPlayer: 'user' | 'computer';
     setCurrentPlayer: Dispatch<SetStateAction<'user' | 'computer'>>;
+    winner: 'null' | 'user' | 'computer';
+    setWinner: Dispatch<SetStateAction<'null' | 'user' | 'computer'>>;
     userField: Field; 
     computerField: Field; 
     setMode: Dispatch<SetStateAction<'null' | 'setting' | 'play'>>;
@@ -23,6 +25,8 @@ const AppContext = createContext<{
     setMode: () => {},
     currentPlayer: 'user',
     setCurrentPlayer: () => {},
+    winner: 'null',
+    setWinner: () => {},
     userField: [],
     computerField: [],
     setUserField: () => {},
@@ -35,6 +39,7 @@ export const useAppContext = () => useContext(AppContext);
 export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const [mode, setMode] = useState<'null' | 'setting' | 'play'>('null');
     const [currentPlayer, setCurrentPlayer] = useState<'user' | 'computer'>('user');
+    const [winner, setWinner] = useState<'null' | 'user' | 'computer'>('null');
     const [userField, setUserField] = useState<Field>(initializeEmptyField());
     const [computerField, setComputerField] = useState<Field>(initializeEmptyField());
 
@@ -82,6 +87,8 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
             setMode,
             currentPlayer,
             setCurrentPlayer,
+            winner,
+            setWinner,
             userField,
             computerField,
             setUserField,
