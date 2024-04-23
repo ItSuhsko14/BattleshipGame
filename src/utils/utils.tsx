@@ -17,7 +17,7 @@ function generateShips(shipCounts: [number, number][]): Field {
   const fieldSize = 10; // Розмір поля
   const field: Field = [];
 
-  // Ініціалізація порожнього поля
+  
   for (let i = 0; i < fieldSize; i++) {
     const row: Ship = [];
     for (let j = 0; j < fieldSize; j++) {
@@ -26,8 +26,6 @@ function generateShips(shipCounts: [number, number][]): Field {
     field.push(row);
   }
 
-
-  // Генерація розташування кораблів
   for (const [deck, count] of shipCounts) {
     for (let k = 0; k < count; k++) {
       const orientation = Math.random() < 0.5 ? 'horizontal' : 'vertical';

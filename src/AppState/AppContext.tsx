@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, Dispatch, SetStateAction } from 'react';
 
-interface Cell {
+export interface Cell {
     i: number; 
     j: number;
     mode: 'empty' | 'occupied' | 'missed' | 'hit';
@@ -10,6 +10,8 @@ export type Field = Cell[][];
 
 const AppContext = createContext<{
     mode: 'null' | 'setting' | 'play';
+    currentPlayer: 'user' | 'computer';
+    setCurrentPlayer: Dispatch<SetStateAction<'user' | 'computer'>>;
     userField: Field; 
     computerField: Field; 
     setMode: Dispatch<SetStateAction<'null' | 'setting' | 'play'>>;
@@ -18,9 +20,11 @@ const AppContext = createContext<{
     updateCellMode: (i: number, j: number, currentMode: string, field: Field) => void
 }>({
     mode: 'null',
+    setMode: () => {},
+    currentPlayer: 'user',
+    setCurrentPlayer: () => {},
     userField: [],
     computerField: [],
-    setMode: () => {},
     setUserField: () => {},
     setComputerField: () => {},
     updateCellMode: () => {},
@@ -30,6 +34,7 @@ export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
     const [mode, setMode] = useState<'null' | 'setting' | 'play'>('null');
+    const [currentPlayer, setCurrentPlayer] = useState<'user' | 'computer'>('user');
     const [userField, setUserField] = useState<Field>(initializeEmptyField());
     const [computerField, setComputerField] = useState<Field>(initializeEmptyField());
 
@@ -74,9 +79,11 @@ export const AppProvider: React.FC<{ children?: React.ReactNode }> = ({ children
     return (
     <AppContext.Provider value={{
             mode,
+            setMode,
+            currentPlayer,
+            setCurrentPlayer,
             userField,
             computerField,
-            setMode,
             setUserField,
             setComputerField,
             updateCellMode,

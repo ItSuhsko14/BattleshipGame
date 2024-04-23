@@ -9,8 +9,14 @@ interface FieldProps {
 
 }
 const Field: React.FC<FieldProps> = () => {
-    const { mode, userField, computerField, updateCellMode } = useAppContext();
-    const [currentPlayer, setCurrentPlayer] = useState<'user' | 'computer'>('user');
+    const { 
+        mode, 
+        userField, 
+        computerField, 
+        updateCellMode,
+        currentPlayer,
+        setCurrentPlayer    
+    } = useAppContext();
 
     const handleCellClick = (event: React.MouseEvent<HTMLDivElement>, fieldToUpdate: FieldType) => {
         const target = event.target as HTMLDivElement;
@@ -18,11 +24,7 @@ const Field: React.FC<FieldProps> = () => {
         const rowIndex = parseInt(target.dataset.j!);
         const cellMode = fieldToUpdate[cellIndex][rowIndex].mode;
         updateCellMode(cellIndex, rowIndex, cellMode, fieldToUpdate);
-        if (cellMode !== 'occupied' && cellMode !== 'missed' && cellMode !== 'hit') {
-            setCurrentPlayer(currentPlayer === 'user' ? 'computer' : 'user');
-        } else {
-            return
-        }
+        cellMode == 'empty' ? setCurrentPlayer(currentPlayer === 'user' ? 'computer' : 'user') : null;  
     };
 
     const handleUserFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -47,6 +49,7 @@ const Field: React.FC<FieldProps> = () => {
                     <FieldUI
                         field={userField}
                         onCellClick={handleUserFieldClick}
+                        isHidden={false}
                     />
                 </div>
             )
@@ -58,7 +61,9 @@ const Field: React.FC<FieldProps> = () => {
                         <h2 className={styles.fieldTitle}>Player 2</h2>
                         <FieldUI
                             field={computerField}
-                            onCellClick={handleComputerFieldClick} />
+                            onCellClick={handleComputerFieldClick} 
+                            isHidden={true}
+                        />
                     </>
 
                 }

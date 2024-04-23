@@ -9,6 +9,15 @@
     height: 15vh;
 }
 
+.controlContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+ 
+}
+
 @media screen and (orientation: portrait) {
     .container {
       flex-direction: column;
