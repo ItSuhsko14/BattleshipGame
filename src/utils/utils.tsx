@@ -77,3 +77,18 @@ function placeShip(field: Field, row: number, col: number, deck: number, orienta
 }
 
 export default generateShips;
+
+
+
+export const clearUserField = (userField: Cell[][]): void => {
+    const rows = userField.length;
+    const cols = userField[0].length;
+
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            userField[i][j].mode = 'empty';
+        }
+    }
+};
+
+

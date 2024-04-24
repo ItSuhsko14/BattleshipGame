@@ -37,11 +37,10 @@ body {
   min-height: 100vh;
   width: 100%;
   margin: 0;
-  background-color: papayawhip; 
+  background-color: lightblue; 
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  border: 4px dashed red;
 }
 
 h1 {
@@ -61,7 +60,6 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
 }
 button:focus,
 button:focus-visible {

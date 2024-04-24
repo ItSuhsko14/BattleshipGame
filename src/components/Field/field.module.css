@@ -1,9 +1,8 @@
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    background-color: rgb(250, 250, 250);
-    border: 3px solid blue;
+    
     margin: 0 auto;
     width: 100%;
     height: auto;
@@ -12,12 +11,14 @@
 @media screen and (orientation: portrait) {
     .container {
       flex-direction: column;
+      margin-top: 5%;
     }
   }
   
 @media screen and (orientation: landscape) {
   .container {
     flex-direction: row;
+    margin: 0 0 0 0;
   }
 }
 
@@ -26,13 +27,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
 }
 
 @media screen and (orientation: portrait) {
   .fieldContainer {
-    height: 75vw;
-    width: 75vw;
+    height: 33vh;
+    width: 33vh;
+    margin-bottom: 10%
   }
 }
 
@@ -40,6 +41,9 @@
   .fieldContainer {
     height: 30vw;
     width: 30vw;
+  }
+  .field {
+
   }
 }
 
@@ -50,13 +54,13 @@
     height: 100%;
     width: 100vw;
     background-color: rgb(250, 250, 250);
-    border: 3px solid red;
+    /* border: 3px solid darkblue; */
 }
 
 .row {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    border: 1px solid darkblue;
+    border: 1px solid ;
     gap: 0px;
     width: 100%;
     height: 10%;
@@ -64,7 +68,7 @@
 
 .cell {
     background-color: lightgray;
-    border: 1px solid rgb(14, 197, 14);
+    border: 1px solid grey;
 }
 
 .fieldTitle {
@@ -76,11 +80,11 @@
 }
 
 .occupied {
-  background-color: grey;
+  background-color: rgb(16, 70, 137);
 }
 
 .missed {
-  background-color: yellow;
+  background-color: rgb(253, 253, 109);
 }
 
 .hit {

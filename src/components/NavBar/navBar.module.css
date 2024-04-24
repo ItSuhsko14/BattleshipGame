@@ -1,31 +1,35 @@
 .title {
-    margin: 0;
+    margin-bottom: 10px;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: bold;
 }
 
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    height: 15vh;
+    flex-direction: column;
+    padding: 5%;
 }
 
 .controlContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
- 
+
 }
 
 @media screen and (orientation: portrait) {
     .container {
-      flex-direction: column;
+      height: 30vh;
     }
 }
     
 @media screen and (orientation: landscape) {
     .container {
-      flex-direction: row;
+      
     }
+
 }

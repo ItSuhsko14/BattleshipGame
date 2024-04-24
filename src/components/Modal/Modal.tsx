@@ -3,16 +3,23 @@ import { styled } from '@mui/system';
 import { Modal, Typography, Button } from '@mui/material';
 
 const ModalContainer = styled('div')({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'fixed',
     top: '50%', 
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 'fit-content', 
+    width: '80%', 
     height: 'fit-content',
   });
   
   
   const PaperContainer = styled('div')({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
     backgroundColor: '#ffffff',
     border: '2px solid #000',
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -21,7 +28,15 @@ const ModalContainer = styled('div')({
 
 const GameOverModal = () => {
   const { winner, setWinner } = useAppContext();
-
+  
+  const handleClose = () => {
+    console.log(winner);
+    
+    setWinner('null');
+    console.log(winner);
+    
+  };
+  
   return (
     <Modal
       open={winner !== 'null'}
@@ -37,10 +52,7 @@ const GameOverModal = () => {
           <Typography variant="body1" id="game-over-modal-description" gutterBottom>
              {winner === "user" ? "Ви перемогли!" : "Ви програли!"}
           </Typography>
-            <Button onClick={() => {
-                setWinner('null')
-                }
-            }
+            <Button onClick={handleClose}
             >
                 Закрити
             </Button>

@@ -2,7 +2,6 @@
 import styles from './field.module.css'
 import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
-import Setting from './Setting';
 import { computerShoot, checkOccupiedCells, getShipCells, isShipDestroyed, markMissedAdjacentCells } from '../../utils/actionFunctions';
 
 interface FieldProps {
@@ -69,7 +68,7 @@ const Field: React.FC<FieldProps> = () => {
         <div className={styles.container}>
             {(mode === 'setting' || mode === 'play') && (
                 <div>
-                    <h2 className={styles.fieldTitle}>Player 1</h2>
+                    <h2 className={styles.fieldTitle}>Ваше поле</h2>
                     <FieldUI
                         field={userField}
                         onCellClick={onUserClick}
@@ -79,10 +78,9 @@ const Field: React.FC<FieldProps> = () => {
             )
             }
             <div>
-                {mode === 'setting' && <Setting />}
                 {mode === 'play' &&
                     <>
-                        <h2 className={styles.fieldTitle}>Player 2</h2>
+                        <h2 className={styles.fieldTitle}>Компьютер</h2>
                         <FieldUI
                             field={computerField}
                             onCellClick={handleComputerFieldClick} 
