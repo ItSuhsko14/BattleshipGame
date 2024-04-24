@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = () => {
     }
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>Лютий бій</h1>
+            {/* <h1 className={styles.title}>Лютий бій</h1> */}
             <div className={styles.controlContainer}>
                 <Button
                     buttonText={

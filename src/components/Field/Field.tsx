@@ -3,7 +3,7 @@ import styles from './field.module.css'
 import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
 import Setting from './Setting';
-import { computerShoot, checkOccupiedCells } from '../../utils/actionFunctions';
+import { computerShoot, checkOccupiedCells, getShipCells, isShipDestroyed } from '../../utils/actionFunctions';
 
 interface FieldProps {
 
@@ -20,7 +20,6 @@ const Field: React.FC<FieldProps> = () => {
     } = useAppContext();
 
     const handleCellClick = () => {
-        console.log('handleCellClick');
     };
 
     const computerAttack = (i: number, j: number) => {
@@ -38,13 +37,8 @@ const Field: React.FC<FieldProps> = () => {
             checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
             computerAttack(i, j);
         } else {
-            console.log(currentPlayer);
             setCurrentPlayer('user')
         }
-        
-        
-        
-        
     };
     
     const handleComputerFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -54,10 +48,13 @@ const Field: React.FC<FieldProps> = () => {
             const rowIndex = parseInt(target.dataset.j!);
             const cellMode = computerField[cellIndex][rowIndex].mode;
             updateCellMode(cellIndex, rowIndex, cellMode, computerField);
+            console.log('current cell', cellIndex, rowIndex);
+            console.log(computerField[cellIndex][rowIndex].mode);
+            const ship =getShipCells(cellIndex, rowIndex, computerField)
+            isShipDestroyed(cellIndex, rowIndex, computerField, ship)
             checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
             if (cellMode == 'empty') {
                 setCurrentPlayer('computer')
-                console.log(currentPlayer);
                 const {i, j} = computerShoot(userField);
                 computerAttack(i, j);
             }
