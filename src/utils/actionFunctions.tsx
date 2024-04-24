@@ -40,12 +40,14 @@ export const getShipCells = (i: number, j: number, field: Cell[][]): { row: numb
 
         if (field[row][col].mode === 'occupied' || field[row][col].mode === 'hit') {
             shipCells.push({ row, col });
+
             const adjacentOffsets = [
                 { row: -1, col: 0 }, // вище
                 { row: 1, col: 0 },  // нижче
                 { row: 0, col: -1 }, // ліворуч
                 { row: 0, col: 1 },  // праворуч
             ];
+
             for (const offset of adjacentOffsets) {
                 const adjacentRow = row + offset.row;
                 const adjacentCol = col + offset.col;
@@ -54,27 +56,40 @@ export const getShipCells = (i: number, j: number, field: Cell[][]): { row: numb
         }
     };
 
+    checkAdjacentCells(i, j);
+    console.log('shipCells', shipCells);
+    
     return shipCells;
 };
 
+
 export const isShipDestroyed = (i: number, j: number, field: Cell[][], shipCells: { row: number, col: number }[]): boolean => {
+    console.log('isShipDestroyed start');
+    if (shipCells.length === 0) {
+        console.log('ship not destroyed');
+        return false;
+    }
+
     const checkAdjacentCells = (row: number, col: number) => {
+        console.log('checkAdjacentCells');
+        
         if (row < 0 || row >= field.length || col < 0 || col >= field[0].length ) {
             return;
         }
     checkAdjacentCells(i, j);
+
+    }
     for (const cell of shipCells) {
         if (field[cell.row][cell.col].mode !== 'hit') {
+            console.log('ship not destroyed');
             return false; 
         }
     }
-    }
+    console.log('ship destroyed');
     return true; 
 }
-    
 
-
-const markMissedAdjacentCells = (i: number, j: number, field: Cell[][]) => {
+export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[], field: Cell[][]) => {
     const adjacentOffsets = [
         { row: -1, col: 0 }, // вище
         { row: 1, col: 0 },  // нижче
@@ -82,32 +97,23 @@ const markMissedAdjacentCells = (i: number, j: number, field: Cell[][]) => {
         { row: 0, col: 1 },  // праворуч
     ];
 
-    for (const offset of adjacentOffsets) {
-        const adjacentRow = i + offset.row;
-        const adjacentCol = j + offset.col;
+    for (const cell of shipCells) {
+        for (const offset of adjacentOffsets) {
+            const adjacentRow = cell.row + offset.row;
+            const adjacentCol = cell.col + offset.col;
 
-        
-        if (
-            adjacentRow >= 0 &&
-            adjacentRow < field.length &&
-            adjacentCol >= 0 &&
-            adjacentCol < field[0].length
-        ) {
-        
-            if (field[adjacentRow][adjacentCol].mode === 'empty') {
+            if (
+                adjacentRow >= 0 &&
+                adjacentRow < field.length &&
+                adjacentCol >= 0 &&
+                adjacentCol < field[0].length &&
+                field[adjacentRow][adjacentCol].mode !== 'hit'
+            ) {
                 field[adjacentRow][adjacentCol].mode = 'missed';
-            }
-            // Якщо знайдена поручна клітина має режим 'hit', рекурсивно викликаємо цю функцію для неї
-            else if (field[adjacentRow][adjacentCol].mode === 'hit') {
-                markMissedAdjacentCells(adjacentRow, adjacentCol, field);
             }
         }
     }
 };
 
-export const makeShipDestroy = (i: number, j: number, field: Cell[][]): void => {
-    console.log('makeShipDestroy');
-    
-    markMissedAdjacentCells(i, j, field);
-};
+
 

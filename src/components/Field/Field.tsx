@@ -3,7 +3,7 @@ import styles from './field.module.css'
 import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
 import Setting from './Setting';
-import { computerShoot, checkOccupiedCells, getShipCells, isShipDestroyed } from '../../utils/actionFunctions';
+import { computerShoot, checkOccupiedCells, getShipCells, isShipDestroyed, markMissedAdjacentCells } from '../../utils/actionFunctions';
 
 interface FieldProps {
 
@@ -50,8 +50,8 @@ const Field: React.FC<FieldProps> = () => {
             updateCellMode(cellIndex, rowIndex, cellMode, computerField);
             console.log('current cell', cellIndex, rowIndex);
             console.log(computerField[cellIndex][rowIndex].mode);
-            const ship =getShipCells(cellIndex, rowIndex, computerField)
-            isShipDestroyed(cellIndex, rowIndex, computerField, ship)
+            const ship = getShipCells(cellIndex, rowIndex, computerField)
+            isShipDestroyed(cellIndex, rowIndex, computerField, ship) ? markMissedAdjacentCells(ship, computerField) : null;
             checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
             if (cellMode == 'empty') {
                 setCurrentPlayer('computer')
@@ -89,13 +89,9 @@ const Field: React.FC<FieldProps> = () => {
                             isHidden={true}
                         />
                     </>
-
                 }
             </div>
-
-
         </div>
     )
 }
-
 export default Field
