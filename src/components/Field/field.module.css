@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
     margin: 0 auto;
     width: 100%;
     height: auto;
@@ -42,9 +41,6 @@
     height: 30vw;
     width: 30vw;
   }
-  .field {
-
-  }
 }
 
 .field {
@@ -54,7 +50,6 @@
     height: 100%;
     width: 100vw;
     background-color: rgb(250, 250, 250);
-    /* border: 3px solid darkblue; */
 }
 
 .row {

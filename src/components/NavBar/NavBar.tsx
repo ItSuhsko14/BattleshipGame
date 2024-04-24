@@ -14,7 +14,6 @@ const NavBar: React.FC<NavBarProps> = () => {
         setMode, 
         setUserField, 
         setComputerField,
-        currentPlayer,
         userField
     } = useAppContext();
     const [isUserFieldReady, setIsUserFieldReady] = useState<boolean>(false);
