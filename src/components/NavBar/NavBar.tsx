@@ -71,7 +71,7 @@ const NavBar: React.FC<NavBarProps> = () => {
                 />
                 {mode === 'setting' && <Button buttonText="Розставити" onClick={handleCreateShipsClick} disabled={false}/>}
             </div>
-            <Typography variant="h6"> {message} </Typography>
+            <span className={styles.message}> {message} </span>
         </div >
     )
 }

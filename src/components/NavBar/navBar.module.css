@@ -10,7 +10,8 @@
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
-    padding: 5%;
+    padding: 2vh;
+    color: rgb(9, 0, 133);
 }
 
 .controlContainer {
@@ -24,7 +25,7 @@
 
 @media screen and (orientation: portrait) {
     .container {
-      height: 30vh;
+      height: 25vh;
     }
     .title {
         font-size: 5vh;
@@ -36,7 +37,10 @@
         width: 30vw;
     }
     .title {
-        font-size: 5vw;
+        font-size: 3vw;
+    }
+    .message {
+        font-size: 1.6vw;
     }
 }
 

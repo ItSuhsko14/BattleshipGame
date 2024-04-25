@@ -5,12 +5,12 @@
     margin: 0 auto;
     width: 100%;
     height: auto;
+    color: rgb(9, 0, 133);
 }
 
 @media screen and (orientation: portrait) {
     .container {
       flex-direction: column;
-      margin-top: 3vh;
       height: 70vh;
     }
   }
@@ -34,7 +34,7 @@
   .fieldContainer {
     height: 30vh;
     width: 30vh;
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
   }
 }
 
