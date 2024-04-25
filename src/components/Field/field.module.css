@@ -10,7 +10,8 @@
 @media screen and (orientation: portrait) {
     .container {
       flex-direction: column;
-      margin-top: 5%;
+      margin-top: 3vh;
+      height: 70vh;
     }
   }
   
@@ -18,6 +19,7 @@
   .container {
     flex-direction: row;
     margin: 0 0 0 0;
+    width: 70vw;
   }
 }
 
@@ -30,9 +32,9 @@
 
 @media screen and (orientation: portrait) {
   .fieldContainer {
-    height: 33vh;
-    width: 33vh;
-    margin-bottom: 10%
+    height: 30vh;
+    width: 30vh;
+    margin-bottom: 3vh;
   }
 }
 
@@ -50,6 +52,7 @@
     height: 100%;
     width: 100vw;
     background-color: rgb(250, 250, 250);
+    border-collapse: collapse;
 }
 
 .row {
@@ -59,11 +62,13 @@
     gap: 0px;
     width: 100%;
     height: 10%;
+    border: 0;
+    
 }
 
 .cell {
     background-color: lightgray;
-    border: 1px solid grey;
+    border: 1px solid rgb(16, 70, 137);
 }
 
 .fieldTitle {
