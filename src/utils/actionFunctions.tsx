@@ -1,23 +1,66 @@
 import type { Field, Cell } from '../AppState/AppContext';
 
-export const computerShoot = (userField: Field) => {
-    
+export const computerShoot = (userField: Field, prevShot: { i: number, j: number } | null) => {
+    console.log('--- computerShoot ---');
+
     let i, j;
+    // if (prevShot) {
+    //     const offsets = [
+    //         { row: -1, col: 0 }, // вище
+    //         { row: 1, col: 0 },  // нижче
+    //         { row: 0, col: -1 }, // ліворуч
+    //         { row: 0, col: 1 },  // праворуч
+    //     ];
+
+    //     // Масив для зберігання доступних для вибору сусідніх клітинок
+    //     const availableNeighbors: { i: number, j: number }[] = [];
+
+    //     for (const offset of offsets) {
+    //         const adjacentRow = prevShot.i + offset.row;
+    //         const adjacentCol = prevShot.j + offset.col;
+
+    //         // Перевірка, чи координати сусідньої клітинки в межах поля
+    //         if (
+    //             adjacentRow >= 0 && adjacentRow < userField.length &&
+    //             adjacentCol >= 0 && adjacentCol < userField[0].length
+    //         ) {
+    //             const neighborCell = userField[adjacentRow][adjacentCol];
+
+    //             // Перевірка, чи сусідня клітинка ще не потрапила
+    //             if (neighborCell.mode !== 'missed' && neighborCell.mode !== 'hit') {
+    //                 console.log(availableNeighbors);
+    //                 availableNeighbors.push({ i: adjacentRow, j: adjacentCol });
+    //             }
+    //         }
+    //     }
+
+        // Якщо є доступні сусідні клітинки, обираємо випадкову з них
+    //     console.log(availableNeighbors);
+    //     if (availableNeighbors.length > 0) {
+    //         const randomIndex = Math.floor(Math.random() * availableNeighbors.length);
+    //         console.log(randomIndex);
+    //         console.log(prevShot);        
+    //         return availableNeighbors[randomIndex];
+    //     }
+    // }
+
     do {
         const randomI = Math.floor(Math.random() * 10);
         const randomJ = Math.floor(Math.random() * 10);
         i = randomI;
         j = randomJ;
-    } while (userField[i][j].mode === 'missed' && 'hit');
+    } while (userField[i][j].mode === 'missed' || userField[i][j].mode === 'hit');
     
+    
+    console.log(i, j);
     return { i, j };
 };
+
 
 export const checkOccupiedCells = (field: Field): boolean => {
     for (let i = 0; i < field.length; i++) {
         for (let j = 0; j < field[i].length; j++) {
             if (field[i][j].mode === 'occupied') {
-                console.log('Ще є не підбиті кораблі!');
                 return true;
             }
         }
@@ -55,36 +98,28 @@ export const getShipCells = (i: number, j: number, field: Cell[][]): { row: numb
     };
 
     checkAdjacentCells(i, j);
-    console.log('shipCells', shipCells);
-    
     return shipCells;
 };
 
 
 export const isShipDestroyed = (i: number, j: number, field: Cell[][], shipCells: { row: number, col: number }[]): boolean => {
-    console.log('isShipDestroyed start');
     if (shipCells.length === 0) {
-        console.log('ship not destroyed');
         return false;
     }
 
     const checkAdjacentCells = (row: number, col: number) => {
-        console.log('checkAdjacentCells');
-        
-        if (row < 0 || row >= field.length || col < 0 || col >= field[0].length ) {
+        if (row < 0 || row >= field.length || col < 0 || col >= field[0].length) {
             return;
         }
-    checkAdjacentCells(i, j);
+        checkAdjacentCells(i, j);
 
     }
     for (const cell of shipCells) {
         if (field[cell.row][cell.col].mode !== 'hit') {
-            console.log('ship not destroyed');
-            return false; 
+            return false;
         }
     }
-    console.log('ship destroyed');
-    return true; 
+    return true;
 }
 
 export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[], field: Cell[][]) => {
@@ -118,6 +153,6 @@ export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[
 };
 
 
-    
+
 
 

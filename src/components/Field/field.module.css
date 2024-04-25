@@ -103,7 +103,7 @@
 }
 
 .missed {
-  background-color: rgb(253, 253, 109);
+  background-color: rgb(109, 253, 174);
 }
 
 .missed::after {

@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import styles from './field.module.css'
 import FieldUI from './FieldUI';
 import { useAppContext } from '../../AppState/AppContext';
@@ -18,21 +18,23 @@ const Field: React.FC<FieldProps> = () => {
         setCurrentPlayer    
     } = useAppContext();
 
+    const [prevShot, setPrevShot] = useState<{ i: number, j: number } | null>(null);
     const handleCellClick = () => {
     };
 
     const computerAttack = (i: number, j: number) => {
         setCurrentPlayer('computer')
-        setTimeout(() => {
-            
-        }, 2000 )
         const cellIndex = i;
         const rowIndex = j;
         const cellMode = userField[cellIndex][rowIndex].mode;
+        console.log(userField[i][j].mode);
+        userField[i][j].mode === 'occupied' ? setPrevShot({i, j}) : setPrevShot(null);
         updateCellMode(cellIndex, rowIndex, cellMode, userField);
-        if (userField[cellIndex][rowIndex].mode == 'empty') {
-            console.log(userField[cellIndex][rowIndex].mode);
-            const {i, j} = computerShoot(userField);
+        const ship = getShipCells(cellIndex, rowIndex, userField)
+        isShipDestroyed(cellIndex, rowIndex, userField, ship) ? markMissedAdjacentCells(ship, computerField) : null;
+        console.log(userField[cellIndex][rowIndex].mode);
+        if (userField[cellIndex][rowIndex].mode == 'hit') {
+            const {i, j} = computerShoot(userField, prevShot);
             checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
             computerAttack(i, j);
         } else {
@@ -41,20 +43,19 @@ const Field: React.FC<FieldProps> = () => {
     };
     
     const handleComputerFieldClick = (event: React.MouseEvent<HTMLDivElement>) => {
+            console.log('---userShot---');
             handleCellClick();
             const target = event.target as HTMLDivElement;
             const cellIndex = parseInt(target.dataset.i!);
             const rowIndex = parseInt(target.dataset.j!);
             const cellMode = computerField[cellIndex][rowIndex].mode;
             updateCellMode(cellIndex, rowIndex, cellMode, computerField);
-            console.log('current cell', cellIndex, rowIndex);
-            console.log(computerField[cellIndex][rowIndex].mode);
             const ship = getShipCells(cellIndex, rowIndex, computerField)
             isShipDestroyed(cellIndex, rowIndex, computerField, ship) ? markMissedAdjacentCells(ship, computerField) : null;
             checkOccupiedCells(computerField) ? null : setWinner(currentPlayer);
             if (cellMode == 'empty') {
                 setCurrentPlayer('computer')
-                const {i, j} = computerShoot(userField);
+                const {i, j} = computerShoot(userField, prevShot);
                 computerAttack(i, j);
             }
     };
