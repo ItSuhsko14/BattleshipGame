@@ -1,9 +1,7 @@
 import type { Field, Cell } from '../AppState/AppContext';
 
 export const computerShoot = (userField: Field) => {
-    setTimeout(() => {
-        
-    }, 5000 )
+    
     let i, j;
     do {
         const randomI = Math.floor(Math.random() * 10);
@@ -120,5 +118,6 @@ export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[
 };
 
 
+    
 
 
