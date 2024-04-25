@@ -32,8 +32,8 @@
 
 @media screen and (orientation: portrait) {
   .fieldContainer {
-    height: 25vh;
-    width: 25vh;
+    height: 28vh;
+    width: 28vh;
     margin-bottom: 1vh;
   }
 }
