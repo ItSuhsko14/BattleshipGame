@@ -95,6 +95,10 @@ export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[
         { row: 1, col: 0 },  // нижче
         { row: 0, col: -1 }, // ліворуч
         { row: 0, col: 1 },  // праворуч
+        { row: -1, col: -1 }, // по діагоналі вище і ліворуч
+        { row: -1, col: 1 },  // по діагоналі вище і праворуч
+        { row: 1, col: -1 },  // по діагоналі нижче і ліворуч
+        { row: 1, col: 1 },   // по діагоналі нижче і праворуч
     ];
 
     for (const cell of shipCells) {
@@ -114,6 +118,7 @@ export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[
         }
     }
 };
+
 
 
 
