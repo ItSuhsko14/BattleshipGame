@@ -1,20 +1,20 @@
 .container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    height: auto;
-    color: rgb(9, 0, 133);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  height: auto;
+  color: rgb(9, 0, 133);
 }
 
 @media screen and (orientation: portrait) {
-    .container {
-      flex-direction: column;
-      height: 70vh;
-    }
+  .container {
+    flex-direction: column;
+    height: 70vh;
   }
-  
+}
+
 @media screen and (orientation: landscape) {
   .container {
     flex-direction: row;
@@ -24,10 +24,10 @@
 }
 
 .fieldContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (orientation: portrait) {
@@ -45,38 +45,57 @@
   }
 }
 
+@media screen and (device: descktop) {
+  .fieldContainer {
+    height: 30vw;
+    width: 30vw;
+    margin: 3vw;
+  }
+}
+
 .field {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 0px;
-    height: 100%;
-    width: 100vw;
-    background-color: rgb(250, 250, 250);
-    border-collapse: collapse;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0px;
+  height: 100%;
+  width: 100vw;
+  background-color: rgb(250, 250, 250);
+  border-collapse: collapse;
 }
 
 .row {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    border: 1px solid ;
-    gap: 0px;
-    width: 100%;
-    height: 10%;
-    border: 0;
-    
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  border: 1px solid;
+  gap: 0px;
+  width: 100%;
+  height: 10%;
+  border: 0;
+
 }
 
 .cell {
-    background-color: lightgray;
-    border: 1px solid rgb(16, 70, 137);
+  position: relative;
+  background-color: lightgray;
+  border: 1px solid rgb(16, 70, 137);
+  transition: background-color 0.5s ease, border 3s, transform 0.3s ease;
+}
+
+.cell:hover {
+  border: 10px;
+}
+
+.cell.animate {
+  animation: pulse 0.5s alternate infinite;
 }
 
 .fieldTitle {
-    margin: 0;
+  margin: 0;
+  font-size: 3vh;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .occupied {
@@ -87,10 +106,54 @@
   background-color: rgb(253, 253, 109);
 }
 
+.missed::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background-color: black;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .hit {
   background-color: red;
 }
 
+.hit::before,
+.hit::after {
+  content: '';
+  position: absolute;
+  width: 100%; 
+  height: 0.1px; 
+  background-color: rgb(97, 97, 97);
+  border: 0.1px;
+}
+
+.hit::before {
+  top: 50%;
+  left: 0;
+  transform: rotate(45deg); 
+}
+
+.hit::after {
+  top: 50%;
+  right: 0;
+  transform: rotate(-45deg);
+}
+
 .empty {
   background-color: white;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(2);
+  }
 }

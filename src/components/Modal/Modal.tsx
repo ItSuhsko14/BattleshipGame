@@ -46,10 +46,10 @@ const GameOverModal = () => {
     >
        <ModalContainer>
         <PaperContainer>
-          <Typography variant="h5" id="game-over-modal-title" gutterBottom>
-            Гра закінчилась
+          <Typography color="primary" variant="h5" id="game-over-modal-title" gutterBottom>
+            Кінець гри
           </Typography>
-          <Typography variant="body1" id="game-over-modal-description" gutterBottom>
+          <Typography color="primary" variant="h5" id="game-over-modal-description" gutterBottom>
              {winner === "user" ? "Ви перемогли!" : "Ви програли!"}
           </Typography>
             <Button onClick={handleClose}

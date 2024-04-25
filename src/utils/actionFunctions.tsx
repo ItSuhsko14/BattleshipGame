@@ -3,7 +3,7 @@ import type { Field, Cell } from '../AppState/AppContext';
 export const computerShoot = (userField: Field) => {
     setTimeout(() => {
         
-    }, 2000 )
+    }, 5000 )
     let i, j;
     do {
         const randomI = Math.floor(Math.random() * 10);
