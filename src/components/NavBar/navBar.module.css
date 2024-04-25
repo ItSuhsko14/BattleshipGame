@@ -25,7 +25,7 @@
 
 @media screen and (orientation: portrait) {
     .container {
-      height: 25vh;
+      height: 20vh;
     }
     .title {
         font-size: 5vh;
