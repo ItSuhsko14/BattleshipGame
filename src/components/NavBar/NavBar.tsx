@@ -4,7 +4,6 @@ import { useAppContext } from "../../AppState/AppContext"
 import styles from './navBar.module.css'
 import generateShips, { clearUserField } from './../../utils/utils'
 import { shipConfigurations } from "../../utils/shipConfiguration"
-import Typography from '@mui/material/Typography'
 
 interface NavBarProps {
 }
