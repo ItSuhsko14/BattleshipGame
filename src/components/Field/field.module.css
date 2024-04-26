@@ -109,8 +109,8 @@
 .missed::after {
   content: '';
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 2px;
+  height: 2px;
   background-color: black;
   border-radius: 50%;
   top: 50%;
