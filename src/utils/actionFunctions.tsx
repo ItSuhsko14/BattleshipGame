@@ -1,7 +1,9 @@
 import type { Field, Cell } from '../AppState/AppContext';
 
+
 export const computerShoot = (userField: Field, prevShot: { i: number, j: number } | null) => {
     let i, j;
+    if (prevShot) makeOneMoreShoot();
     do {
         const randomI = Math.floor(Math.random() * 10);
         const randomJ = Math.floor(Math.random() * 10);
@@ -107,7 +109,7 @@ export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[
     }
 };
 
-
+const makeOneMoreShoot = () => {}
 
 
 
