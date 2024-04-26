@@ -1,49 +1,7 @@
 import type { Field, Cell } from '../AppState/AppContext';
 
 export const computerShoot = (userField: Field, prevShot: { i: number, j: number } | null) => {
-    console.log('--- computerShoot ---');
-
     let i, j;
-    if (prevShot = 1) {
-        const offsets = [
-            { row: -1, col: 0 }, // вище
-            { row: 1, col: 0 },  // нижче
-            { row: 0, col: -1 }, // ліворуч
-            { row: 0, col: 1 },  // праворуч
-        ];
-
-        // Масив для зберігання доступних для вибору сусідніх клітинок
-        const availableNeighbors: { i: number, j: number }[] = [];
-
-        for (const offset of offsets) {
-            const adjacentRow = prevShot.i + offset.row;
-            const adjacentCol = prevShot.j + offset.col;
-
-            // Перевірка, чи координати сусідньої клітинки в межах поля
-            if (
-                adjacentRow >= 0 && adjacentRow < userField.length &&
-                adjacentCol >= 0 && adjacentCol < userField[0].length
-            ) {
-                const neighborCell = userField[adjacentRow][adjacentCol];
-
-                // Перевірка, чи сусідня клітинка ще не потрапила
-                if (neighborCell.mode !== 'missed' && neighborCell.mode !== 'hit') {
-                    console.log(availableNeighbors);
-                    availableNeighbors.push({ i: adjacentRow, j: adjacentCol });
-                }
-            }
-        }
-
-        Якщо є доступні сусідні клітинки, обираємо випадкову з них
-        console.log(availableNeighbors);
-        if (availableNeighbors.length > 0) {
-            const randomIndex = Math.floor(Math.random() * availableNeighbors.length);
-            console.log(randomIndex);
-            console.log(prevShot);        
-            return availableNeighbors[randomIndex];
-        }
-    }
-
     do {
         const randomI = Math.floor(Math.random() * 10);
         const randomJ = Math.floor(Math.random() * 10);
@@ -51,8 +9,6 @@ export const computerShoot = (userField: Field, prevShot: { i: number, j: number
         j = randomJ;
     } while (userField[i][j].mode === 'missed' || userField[i][j].mode === 'hit');
     
-    
-    console.log(i, j);
     return { i, j };
 };
 
@@ -65,7 +21,6 @@ export const checkOccupiedCells = (field: Field): boolean => {
             }
         }
     }
-    console.log('Всі кораблі підбиті!');
     return false;
 };
 export const getShipCells = (i: number, j: number, field: Cell[][]): { row: number, col: number }[] => {
@@ -83,10 +38,10 @@ export const getShipCells = (i: number, j: number, field: Cell[][]): { row: numb
             shipCells.push({ row, col });
 
             const adjacentOffsets = [
-                { row: -1, col: 0 }, // вище
-                { row: 1, col: 0 },  // нижче
-                { row: 0, col: -1 }, // ліворуч
-                { row: 0, col: 1 },  // праворуч
+                { row: -1, col: 0 }, 
+                { row: 1, col: 0 },  
+                { row: 0, col: -1 }, 
+                { row: 0, col: 1 },  
             ];
 
             for (const offset of adjacentOffsets) {
@@ -124,14 +79,14 @@ export const isShipDestroyed = (i: number, j: number, field: Cell[][], shipCells
 
 export const markMissedAdjacentCells = (shipCells: { row: number, col: number }[], field: Cell[][]) => {
     const adjacentOffsets = [
-        { row: -1, col: 0 }, // вище
-        { row: 1, col: 0 },  // нижче
-        { row: 0, col: -1 }, // ліворуч
-        { row: 0, col: 1 },  // праворуч
-        { row: -1, col: -1 }, // по діагоналі вище і ліворуч
-        { row: -1, col: 1 },  // по діагоналі вище і праворуч
-        { row: 1, col: -1 },  // по діагоналі нижче і ліворуч
-        { row: 1, col: 1 },   // по діагоналі нижче і праворуч
+        { row: -1, col: 0 },
+        { row: 1, col: 0 }, 
+        { row: 0, col: -1 },
+        { row: 0, col: 1 }, 
+        { row: -1, col: -1 },
+        { row: -1, col: 1 }, 
+        { row: 1, col: -1 }, 
+        { row: 1, col: 1 }, 
     ];
 
     for (const cell of shipCells) {
